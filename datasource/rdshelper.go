@@ -6,13 +6,8 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"log"
 	"lottery/conf"
-	"sync"
 	"time"
 )
-
-var rdsLock sync.Mutex
-
-var cacheInstance *RedisConn
 
 type RedisConn struct {
 	pool      *redis.Pool
@@ -39,19 +34,7 @@ func (r *RedisConn) Do(commandName string, args ...interface{}) (interface{}, er
 	return reply, err
 }
 
-func GetCache() *RedisConn {
-	if cacheInstance != nil {
-		return cacheInstance
-	}
-	rdsLock.Lock()
-	defer rdsLock.Unlock()
-	if cacheInstance != nil {
-		return cacheInstance
-	}
-	return instanceCache()
-}
-
-func instanceCache() *RedisConn {
+func NewCache() *RedisConn {
 	pool := &redis.Pool{
 		Dial: func() (redis.Conn, error) {
 			dial, err := redis.Dial("tcp", fmt.Sprintf("%s:%d", conf.RedisCache.Host, conf.RedisCache.Port))
@@ -75,9 +58,8 @@ func instanceCache() *RedisConn {
 		MaxConnLifetime: 0,
 	}
 
-	cacheInstance = &RedisConn{
+	return &RedisConn{
 		pool:      pool,
 		showDebug: true,
 	}
-	return cacheInstance
 }
