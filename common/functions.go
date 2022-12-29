@@ -16,7 +16,7 @@ import (
 
 // NowUnix 当前时间戳
 func NowUnix() int {
-	return int(time.Now().In(conf.SysTimeLocation).Unix())
+	return int(time.Now().Unix())
 }
 
 // FormatFromUnixTime 格式化unix时间戳 yyyy-mm-dd HH:ii:ss

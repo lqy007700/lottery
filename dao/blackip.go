@@ -23,7 +23,7 @@ func (g *BlackIp) GetByIp(ip string) *models.Blackip {
 
 func (g *BlackIp) GetAll() []models.Blackip {
 	blackIpList := make([]models.Blackip, 0)
-	g.db.Find(blackIpList)
+	g.db.Find(&blackIpList)
 	return blackIpList
 }
 

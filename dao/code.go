@@ -23,7 +23,7 @@ func (g *Code) Get(id int64) *models.Code {
 
 func (g *Code) GetAll() []models.Code {
 	codeList := make([]models.Code, 0)
-	g.db.Find(codeList)
+	g.db.Find(&codeList)
 	return codeList
 }
 

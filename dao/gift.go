@@ -23,7 +23,7 @@ func (g *Gift) Get(id int64) *models.Gift {
 
 func (g *Gift) GetAll() []models.Gift {
 	giftList := make([]models.Gift, 0)
-	g.db.Order("display_order asc").Find(giftList)
+	g.db.Order("display_order asc").Find(&giftList)
 	return giftList
 }
 

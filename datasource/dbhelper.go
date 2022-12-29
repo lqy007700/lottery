@@ -20,7 +20,7 @@ func New() *MysqlConn {
 
 func newDb() *gorm.DB {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		conf.DBMaster.User, conf.DBMaster.Port, conf.DBMaster.Host, conf.DBMaster.Port, conf.DBMaster.Databases)
+		conf.DBMaster.User,conf.DBMaster.Pwd, conf.DBMaster.Host, conf.DBMaster.Port, conf.DBMaster.Databases)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(any("连接数据库失败, error=" + err.Error()))
